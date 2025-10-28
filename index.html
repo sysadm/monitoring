@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>Monitoring Live View (WebRTC/WHEP)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+</head>
+<body class="layout-sidebar cols-2">
+  <div class="app">
+    <!-- MAIN -->
+    <section class="card" id="mainCard" aria-label="Główny podgląd">
+      <div class="header">
+        <div class="title" id="mainTitle">—</div>
+        <div class="toolbar">
+          <label class="hint">Miniatury</label>
+          <input id="thumbRange" type="range" min="120" max="280" step="10" />
+          <select id="layoutSelect" title="Układ">
+            <option value="sidebar" selected>Pasek</option>
+            <option value="grid2">Siatka 2×2</option>
+            <option value="grid3">Siatka 3×3</option>
+          </select>
+          <span class="hint">Strona:</span>
+          <button id="prevPageBtn">‹</button>
+          <span id="pageInfo" class="pill">1/1</span>
+          <button id="nextPageBtn">›</button>
+          <button id="cfgBtn" title="Edytuj kamery (JSON)">⚙️ Konfiguruj</button>
+        </div>
+      </div>
+
+      <div class="grid" id="mainGrid">
+        <!-- GŁÓWNY PLAYER -->
+        <div class="mainView" id="mainView">
+          <div class="badge" id="mainBadge">LIVE</div>
+          <div class="controls">
+            <button class="btn" id="mainMuteBtn" title="Wycisz">🔇</button>
+            <button class="btn" id="mainPauseBtn" title="Pauza">⏸</button>
+          </div>
+          <!-- <video> wstawi JS -->
+        </div>
+
+        <!-- SIATKA (dla trybu grid) -->
+        <div class="gridArea cols-2" id="gridArea" style="display:none;"></div>
+      </div>
+
+      <div class="footer">
+        <span class="pill" id="stats">0 kamer</span>
+        <span class="hint">Dbl-click miniatura → zamiana; dbl-click główne/kafelek siatki → fullscreen</span>
+      </div>
+    </section>
+
+    <!-- SIDEBAR -->
+    <aside class="card sidebar" aria-label="Lista kamer" id="sidebarCard">
+      <div class="header">
+        <div class="title">Kamery</div>
+        <div class="toolbar">
+          <button id="resetBtn" class="danger" title="Przywróć domyślne">Reset</button>
+        </div>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </aside>
+  </div>
+
+  <!-- Modal konfiguracji -->
+  <div class="modal" id="cfgModal" aria-hidden="true">
+    <div class="modalCard">
+      <div class="modalHead">
+        <div class="title">Konfiguracja kamer (JSON)</div>
+        <button id="cfgClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <p class="hint">
+          Każda kamera: <code>{ id, name, webrtc }</code><br/>
+          WHEP URL: <code>http://HOST:8889/&lt;path&gt;/whep</code>
+        </p>
+        <textarea id="cfgText"></textarea>
+      </div>
+      <div class="modalFoot">
+        <button id="cfgSave">Zapisz</button>
+        <button id="cfgCancel">Anuluj</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>
